@@ -1,9 +1,19 @@
-import React from 'react'
+import React from "react";
+import { Button } from "react-native-paper";
+import CarListComponent from "../components/CarListComponent";
+import { SaveCarScreen } from "./SaveCar.screen";
 
-const CarScreen = () => {
+const CarScreen = ({ route, navigation }) => {
+  // const { name } = route.params;
+
   return (
-    <div>CarScreen</div>
-  )
-}
+    <div>
+      <h2>Welcome Back!</h2>
 
-export default CarScreen
+      <CarListComponent />
+      <SaveCarScreen />
+    </div>
+  );
+};
+
+export default CarScreen;
