@@ -5,26 +5,11 @@ import { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import HomeTabsScreen from "./screens/HomeTabs.screen";
 import RegisterScreen from "./screens/Register.screen";
+import { AppProvider } from "./context/AppProvider";
 
 export default function App() {
 
-  const INITIAL_CARS_VALUE = [
-    {
-      plateNumber: "123ABC",
-      brand: "Ford",
-      state: "available",
-      imageUrl:
-        "https://images.pexels.com/photos/1007410/pexels-photo-1007410.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    },
-    {
-      plateNumber: "456DEF",
-      brand: "Toyota",
-      state: "unavailable",
-      imageUrl:
-        "https://images.pexels.com/photos/13662314/pexels-photo-13662314.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    },
-    // add more cars here
-  ];
+ 
 
   const Stack = createNativeStackNavigator();
   useEffect(() => {
@@ -32,29 +17,31 @@ export default function App() {
       localStorage.setItem("users", JSON.stringify([]));
     }
     if (!localStorage.getItem("cars")) {
-      localStorage.setItem("cars", JSON.stringify(INITIAL_CARS_VALUE));
+      localStorage.setItem("cars", JSON.stringify([]));
     }
   }, []);
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="Home"
-        screenOptions={{
-          headerShown: false
-        }}
-      >
-        <Stack.Screen
-          name="HomeTabs"
-          component={HomeTabsScreen}
-          options={{ title: "" }}
-        />
-        <Stack.Screen
-          name="Register"
-          component={RegisterScreen}
-          options={{ title: "" }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <AppProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Home"
+          screenOptions={{
+            headerShown: false
+          }}
+        >
+          <Stack.Screen
+            name="HomeTabs"
+            component={HomeTabsScreen}
+            options={{ title: "" }}
+          />
+          <Stack.Screen
+            name="Register"
+            component={RegisterScreen}
+            options={{ title: "" }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AppProvider>
   );
 }
 

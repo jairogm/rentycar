@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View } from "react-native";
 import { styles } from "../styles/styles";
 import { Button, TextInput } from "react-native-paper";
 import { Text } from "react-native";
 import { Formik } from "formik";
 import * as yup from "yup";
+import { AppContext } from "../context/AppProvider";
 
 const RegisterCarComponent = () => {
+  const { carList, setCarList } = useContext(AppContext);
+
   const validationSchema = yup.object().shape({
     plateNumber: yup
       .string()
@@ -21,15 +24,15 @@ const RegisterCarComponent = () => {
   });
 
   const handleRegister = (values) => {
-  const cars = JSON.parse(localStorage.getItem('cars'))
-  const newCar = {
-    plateNumber: values.plateNumber,
-    brand: values.brand,
-    state: values.state,
-    imageUrl: values.imageUrl
-  }
-    console.log(values);
+    const cars = JSON.parse(localStorage.getItem("cars"));
+    const newCar = {
+      plateNumber: values.plateNumber,
+      brand: values.brand,
+      state: values.state,
+      imageUrl: values.imageUrl,
+    };
 
+    setCarList([...carList, newCar]);
     localStorage.setItem("cars", JSON.stringify([...cars, newCar]));
   };
 
