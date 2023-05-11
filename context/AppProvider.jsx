@@ -4,7 +4,7 @@ export const AppContext = createContext();
 
 const AppProvider = ({ children }) => {
   const [carList, setCarList] = useState([]);
-
+  const [rentedList, setrentedList] = useState([]);
   useEffect(() => {
     if (localStorage.getItem("cars")) {
       setCarList(JSON.parse(localStorage.getItem("cars")));
@@ -12,7 +12,9 @@ const AppProvider = ({ children }) => {
   }, []);
   const contextValues = {
     carList,
-    setCarList
+    setCarList,
+    rentedList,
+    setrentedList
   };
   return (
     <AppContext.Provider value={contextValues}>{children}</AppContext.Provider>

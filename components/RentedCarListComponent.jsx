@@ -1,14 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Image, View } from "react-native";
-import { Button, Text } from "react-native-paper";
-import { styles } from "../styles/styles";
+import React, { useContext } from "react";
+import { View } from "react-native-web";
 import { AppContext } from "../context/AppProvider";
+import { styles } from "../styles/styles";
 
-const CarListComponent = () => {
-  const { carList } = useContext(AppContext);
+export const RentedCarListComponent = () => {
+  const { rentedList } = useContext(AppContext);
+  if (!rentedList) {
+    return <Text style={styles.carPlate}>No hay carros rentados</Text>;
+  }
   return (
     <View style={styles.carsContainer}>
-      {carList.map((car, index) => {
+      {rentedList.map((car, index) => {
         return (
           <View key={index} style={styles.carContainer}>
             <Image source={{ uri: car.imageUrl }} style={styles.carImage} />
@@ -16,7 +18,6 @@ const CarListComponent = () => {
               <Text style={styles.carPlate}>{car.plateNumber}</Text>
               <Text style={styles.carBrand}>{car.brand}</Text>
               <Text style={styles.carState}>{car.state}</Text>
-              <Button>Rentar</Button>
             </View>
           </View>
         );
@@ -24,5 +25,3 @@ const CarListComponent = () => {
     </View>
   );
 };
-
-export default CarListComponent;
