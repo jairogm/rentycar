@@ -1,25 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import { Button, Modal } from "react-native-paper";
 import { AnimatePresence, motion } from "framer-motion";
 import RegisterCarComponent from "../components/SaveCarComponent";
+import { AppContext } from "../context/AppProvider";
+import { styles } from "../styles/styles";
 export const SaveCarScreen = () => {
-  const [showRegisterCarModal, setShowRegisterCarModal] = useState(false);
+  const {showRegisterCarModal, setShowRegisterCarModal}= useContext(AppContext);
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => setShowRegisterCarModal(true)}
-      >
-        <Text style={styles.buttonText}>Registrar nuevo carro</Text>
-      </TouchableOpacity>
       <AnimatePresence>
         {showRegisterCarModal && (
           <motion.div
             initial={{ translateY: 100 }}
             animate={{ translateY: 0 }}
-            exit={{ translateY: 500 }}
+            exit={{ translateY: 100 }}
             transition={{ type: "spring", duration: 0.5 }}
             style={styles.modal}
           >
@@ -36,31 +32,3 @@ export const SaveCarScreen = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  button: {
-    backgroundColor: "blue",
-    padding: 10,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "bold",
-  },
-  modal: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: "50%",
-    backgroundColor: "white",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    padding: 20,
-  },
-});
